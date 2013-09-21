@@ -1,5 +1,10 @@
 var app = (function () {
     
+    var g_apikey = "ykbpsxywt4yqx3hyakgxhmev";
+    
+    
+    
+    
     var sum = "bad new";
 
     
