@@ -36,16 +36,13 @@
                 </li>
             </ol>
                     <p>
-                        Models: <select name="carlist" class="A"></select>
+                        Models: <select  id="mySelect"></select>
                         
                     </p>
+                       
+            		<button type="button" onclick="displayResult()">Display value of selected fruit</button>
+  
             
-                    <p>
-                        Year: <select class="makes2"></select>
-                    </p>            
-            
-            
-            		<input type="submit">
             
         </div>
         
@@ -53,7 +50,12 @@
 
 
 <script>
-
+function displayResult()
+{
+var x=document.getElementById("mySelect").selectedIndex;
+alert(document.getElementsByTagName("option")[x].value);
+}
+    
 Array.prototype.getById = function(id)
 {
     for (var i=0, len=this.length; i<len; i++) 
