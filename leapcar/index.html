@@ -75,11 +75,15 @@ Array.prototype.getById = function(id)
 
 var g_apikey = "ykbpsxywt4yqx3hyakgxhmev";
 
-getModels("BMW");
-getMake();
 
+getMake();
+getModels("BMW");
+    
 function getModels(make)
 {
+    //var make_name = document.getElementById("idMake").selectedIndex;
+    //alert(make_name);
+    //var make = "BMW";
     var select = $("select").addClass("model single");
     jQuery.get("http://hearstcars.api.mashery.com/v1/api/vehicles/models-by-make/"+ make +"/json?api_key="+g_apikey, function(data) 
     {
@@ -124,6 +128,16 @@ function getMake()
 }
     
     
+$(document).ready(function(){
+  $('#idMake').change(function() {
+      //alert('Handler for .change() called.');
+    alert($(this).val()); 
+    $("#idModel option").remove();
+    getModels($(this).val());
+      //var make_name = document.getElementById("idMake").selectedIndex;
+      //alert(make_name);
+  });
+});
     
     
 </script>
