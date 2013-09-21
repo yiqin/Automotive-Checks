@@ -39,9 +39,59 @@
                     </span>                    
                 </li>
             </ol>
-            
+                    <p>
+                        Models: <select class="makes"></select>
+                    </p>
+        </div>
+        
+        
+
+
+<script>
+
+Array.prototype.getById = function(id)
+{
+    for (var i=0, len=this.length; i<len; i++) 
+    {
+            if (typeof this[i] != "object") continue;
+            if (this[i].id == id) return this[i];
+    }
+}
+
+var g_apikey = "ykbpsxywt4yqx3hyakgxhmev";
+
+getModels("honda");
+
+function getModels(make)
+{
+    var select = $("select").addClass("model single");
+    jQuery.get("http://hearstcars.api.mashery.com/v1/api/vehicles/models-by-make/"+ make +"/json?api_key="+g_apikey, function(data) 
+    {
+        models = data.vehicles.models;
+        makes = data.vehicles.makes;
+        for (i in models)
+        {
+            var model = models[i];
+            var make = makes.getById(model.make);
+            if (typeof(make) != "undefined" && typeof(make.name) != "undefined")
+            {
+                $("<option>").addClass("model")
+                             .attr("data-id", model.id)
+                             .attr("data-name", model.name)
+                             .attr("data-make", make.id)
+                             .html(make.name + " " + model.name)
+                             .appendTo(select);
+            }
+        }
+    });
+}
+</script>
+    
             
 
-        </div>
+        
+        
+        
     </body>
+    
 </html>
