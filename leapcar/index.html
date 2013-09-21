@@ -41,16 +41,16 @@
                     </p>
             
                     <p>
-                        Models: <select  id="idModel" class="myModel"></select>
+                        Model: <select  id="idModel" class="myModel"></select>
                         
                     </p>
             
                     <p>
-                        Sub Models: <select  id="idSubModel" class="mySubModel"></select>
+                        Sub Model: <select  id="idSubModel" class="mySubModel"></select>
                         
                     </p>
             
-                    <img name="car" id="carImage">
+                    <img name="car" id="carImage" width="300">
                        
             		<button type="button" onclick="displayResult()">Display value of selected fruit</button>
   
@@ -84,10 +84,12 @@ var g_apikey = "ykbpsxywt4yqx3hyakgxhmev";
 
 
 getMake();
+    
     //getModels("Chevrolet");
     
 function getModels(make)
 {
+    //$("<option>").html(" ").appendTo(".myModel");
     //var make_name = document.getElementById("idMake").selectedIndex;
     //alert(make_name);
     //var make = "BMW";
@@ -110,11 +112,13 @@ function getModels(make)
                              .appendTo(".myModel");
             }
         }
+        $("<option>").html("").prependTo(".myModel");
     });
 }
     
 function getMake()
 {
+    $("<option>").html(" ").appendTo(".myMake");
     var select = $("select").addClass("model single");
     jQuery.get("http://hearstcars.api.mashery.com/v1/api/vehicles/makes/all/json?api_key="+g_apikey, function(data) 
     {
@@ -131,6 +135,7 @@ function getMake()
                              .appendTo(".myMake");
             }
         }
+        
     });
 }
     
@@ -138,6 +143,7 @@ function getMake()
     
     function getSubModels(modelID)
     {
+       
     var select = $("select").addClass("model single");
     jQuery.get("http://hearstcars.api.mashery.com/v1/api/vehicles/chrome-by-model/"+modelID+"/json?api_key="+ g_apikey, function(data)
     {
@@ -153,7 +159,7 @@ function getMake()
                              .attr("data-id", model.id)
                              .attr("data-name", model.name)
                              .attr("data-image", model.image)
-                             .html(model.id + " " + model.name)
+                             .html(model.name)
                              .appendTo(".mySubModel");
             }
         }
@@ -162,16 +168,22 @@ $("select option").each(function() {
   if($.inArray(this.value, found) != -1) $(this).remove();
   found.push(this.value);
 });
+         $("<option>").html("").prependTo(".mySubModel");
                });
+        
                }
     
     
 $(document).ready(function(){
   $('#idMake').change(function() {
       //alert('Handler for .change() called.');
-    alert($(this).val()); 
+      //alert($(this).val()); 
     $("#idModel option").remove();
+      //$("#idModel option").html("").appendTo(".myModel");
       $("#idSubModel option").remove();
+      //document.getElementById('carImage').disabled = true;
+      $("#carImage").hide();
+      //$("#idSubModel option").html("").appendTo(".mySubModel");
     getModels($(this).val());
       //var make_name = document.getElementById("idMake").selectedIndex;
       //alert(make_name);
@@ -179,18 +191,22 @@ $(document).ready(function(){
   $('#idModel').change(function() {
       //alert('Handler for .change() called.');
       var optionSelected = $(this).find('option:selected').attr('data-id');
-    alert(optionSelected);//this will show the value of the atribute of that option.
-    alert($(this).val());
+      //alert(optionSelected);//this will show the value of the atribute of that option.
+      //alert($(this).val());
       //alert($(this).val('data-id'));
     $("#idSubModel option").remove();
+      $("#carImage").hide();
+      //$("#idSubModel option").html("").appendTo(".mySubModel");
     getSubModels(optionSelected);
+      
       //var make_name = document.getElementById("idMake").selectedIndex;
       //alert(make_name);
   });
      $('#idSubModel').change(function() {
       //alert('Handler for .change() called.');
       var optionSelected = $(this).find('option:selected').attr('data-image');
-    alert(optionSelected);//this will show the value of the atribute of that option.
+         //alert(optionSelected);//this will show the value of the atribute of that option.
+        $("#carImage").show();
     var pic1 = document.getElementById("carImage"); 
     if (pic1 == typeof('undefined')) return;
     pic1.src = optionSelected;
