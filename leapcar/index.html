@@ -10,7 +10,15 @@
         <script src="scripts/lib/moment.min.js"></script>
         <script src="scripts/app/identity-provider.js"></script>        
         <script src="scripts/app/main.js" type="text/javascript"></script>
+        
+        
+        <script type="text/javascript" charset="utf-8" src="scripts/jso.js"></script>
+        <script type="text/javascript" charset="utf-8" src="scripts/main2.js"></script>        
+        
+     
 
+        
+        
         <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
         <link href="styles/main.css" rel="stylesheet" />
     </head>
@@ -59,9 +67,23 @@
                         
                     </p>
             
-        </div>
+  
+            
+            
+            
+      
         
-        
+                <button class="button dh" id="cmdLogin">Login</button>
+                <button class="button dh" id="cmdWipe">Wipe tokens</button>
+                <button class="button dh" id="cmdPost">Post</button>
+                <button class="button dh" id="cmdGetFeed">Get feed</button>
+                <button class="button dh" id="cmdDelete">Revoke permissions</button>
+                <button class="button dh" id="cmdClearLog">Clear log</button>
+                <div class="results">
+                    <div id="result" class="desc"></div>
+                </div>      
+
+     </div>     
 
 
 <script>
@@ -212,8 +234,13 @@ $(document).ready(function(){
     pic1.src = optionSelected;
   });
     
+  
     
 });
+
+
+
+
     
     
 </script>

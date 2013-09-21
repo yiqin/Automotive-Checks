@@ -594,7 +594,7 @@ var app = (function () {
         navigator.notification.confirm('Physics Building.', function (confirmed) {
             if (confirmed === true || confirmed === 1) {
                 pickPlace = "Physics Building.";
-                
+                alert("in location change");
                 mobileApp.navigate('views/menu.html');
                 
             }
