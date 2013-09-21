@@ -35,14 +35,22 @@
                     </span>                    
                 </li>
             </ol>
+                  <p>
+                 Make: <select  id="idMake" class="myMake"></select>
+                        
+                    </p>
+            
                     <p>
-                        Models: <select  id="mySelect"></select>
+                        Models: <select  id="idModel" class="myModel"></select>
                         
                     </p>
                        
             		<button type="button" onclick="displayResult()">Display value of selected fruit</button>
   
-            
+            <p>
+                 Year: <select  id="idYear" class="myYear"></select>
+                        
+                    </p>
             
         </div>
         
@@ -52,7 +60,7 @@
 <script>
 function displayResult()
 {
-var x=document.getElementById("mySelect").selectedIndex;
+var x=document.getElementById("idMake").selectedIndex;
 alert(document.getElementsByTagName("option")[x].value);
 }
     
@@ -68,6 +76,7 @@ Array.prototype.getById = function(id)
 var g_apikey = "ykbpsxywt4yqx3hyakgxhmev";
 
 getModels("BMW");
+getMake();
 
 function getModels(make)
 {
@@ -87,7 +96,28 @@ function getModels(make)
                              .attr("data-name", model.name)
                              .attr("data-make", make.id)
                              .html(make.name + " " + model.name)
-                             .appendTo(select);
+                             .appendTo(".myModel");
+            }
+        }
+    });
+}
+    
+function getMake()
+{
+    var select = $("select").addClass("model single");
+    jQuery.get("http://hearstcars.api.mashery.com/v1/api/vehicles/makes/all/json?api_key="+g_apikey, function(data) 
+    {
+        makes = data.vehicles.makes;
+        for (i in makes)
+        {
+            var make = makes[i];
+            if (typeof(make) != "undefined" && typeof(make.name) != "undefined")
+            {
+                $("<option>").addClass("make")
+                             .attr("data-name", make.id)
+                             .attr("data-make", make.name)
+                             .html(make.name)
+                             .appendTo(".myMake");
             }
         }
     });
