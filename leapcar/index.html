@@ -59,16 +59,14 @@
                     </p>
             
                     <img name="car" id="carImage" width="300">
-                       
-  
+                    
+  <input type="text" id="myText">
 
         
                 <a data-role="button" class="btn-login-fb btn-big" id="cmdLogin">Login</a>
                 <a data-role="button" class="btn-login-fb btn-big" id="cmdPost">Post</a>
    
-                <div class="results">
-                    <div id="result" class="desc"></div>
-                </div>      
+                    
 
      </div>     
 
@@ -81,7 +79,7 @@
     
 var pic_url;
 var item_fb;                                        
-    
+var amount;
     
 Array.prototype.getById = function(id)
 {
@@ -94,7 +92,7 @@ Array.prototype.getById = function(id)
 
 var g_apikey = "ykbpsxywt4yqx3hyakgxhmev";
 
-
+$("#myText").hide();
 getMake();
     
     //getModels("Chevrolet");
@@ -185,6 +183,21 @@ $("select option").each(function() {
         
                }
     
+    function getPrice(zipcode, modelID)
+    {
+       
+    var select = $("select").addClass("model single");
+     jQuery.get("http://hearstcars.api.mashery.com/v1/api/payments/regional-discount-by-model/"+zipcode+"/"+modelID+"/json?api_key="+ g_apikey, function(data)
+    {
+        models = data.discountdata;
+        amount = models.regionalPrice;
+        var elem = document.getElementById("myText");
+elem.value = amount + "USD";
+                      });
+      
+               }
+    
+    
     
 $(document).ready(function(){
   $('#idMake').change(function() {
@@ -195,6 +208,7 @@ $(document).ready(function(){
       $("#idSubModel option").remove();
       //document.getElementById('carImage').disabled = true;
       $("#carImage").hide();
+      $("#myText").hide();
       //$("#idSubModel option").html("").appendTo(".mySubModel");
     getModels($(this).val());
       //var make_name = document.getElementById("idMake").selectedIndex;
@@ -208,6 +222,7 @@ $(document).ready(function(){
       //alert($(this).val('data-id'));
     $("#idSubModel option").remove();
       $("#carImage").hide();
+      $("#myText").hide();
       //$("#idSubModel option").html("").appendTo(".mySubModel");
     getSubModels(optionSelected);
       
@@ -219,11 +234,14 @@ $(document).ready(function(){
       var optionSelected = $(this).find('option:selected').attr('data-image');
          //alert(optionSelected);//this will show the value of the atribute of that option.
         $("#carImage").show();
+         $("#myText").show();
     var pic1 = document.getElementById("carImage"); 
     if (pic1 == typeof('undefined')) return;
     pic1.src = optionSelected;
     pic_url = optionSelected;
-    item_fb = $(this).find('option:selected').attr('data-name');     
+    item_fb = $(this).find('option:selected').attr('data-name');
+    var model_id = $(this).find('option:selected').attr('data-id');
+    getPrice(47906,212);
   });
     
   
