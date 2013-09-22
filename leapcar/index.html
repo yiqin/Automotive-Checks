@@ -57,6 +57,10 @@
      font-size : 12pt"></select>  </font>
                         
                     </p>
+            <p>
+                <font size=5> Zip Code: <input type="text" id="myZipCode" STYLE="font-family : monospace; 
+     font-size : 12pt">  </font>  
+            </p>
             
                     <img name="car" id="carImage" width="300">
                     
@@ -75,7 +79,7 @@
         
         
 <script>
-   
+   $("#myText").hide();
     
 var pic_url;
 var item_fb;                                        
@@ -92,7 +96,6 @@ Array.prototype.getById = function(id)
 
 var g_apikey = "ykbpsxywt4yqx3hyakgxhmev";
 
-$("#myText").hide();
 getMake();
     
     //getModels("Chevrolet");
@@ -192,7 +195,11 @@ $("select option").each(function() {
         models = data.discountdata;
         amount = models.regionalPrice;
         var elem = document.getElementById("myText");
+        //alert(modelID);
+        if (amount!=0)
 elem.value = amount + "USD";
+        else elem.value = "N.A.";
+     
                       });
       
                }
@@ -241,7 +248,10 @@ $(document).ready(function(){
     pic_url = optionSelected;
     item_fb = $(this).find('option:selected').attr('data-name');
     var model_id = $(this).find('option:selected').attr('data-id');
-    getPrice(47906,212);
+    var elem = document.getElementById("myZipCode");
+    if (elem.value=="") alert("Please enter zip code.");
+    else
+    getPrice(elem.value,model_id);
   });
     
   
