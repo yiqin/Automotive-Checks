@@ -66,9 +66,15 @@
             
                     <img name="car" id="carImage" width="300">
                     <p>
-                        Cost:  <input type="text" id="myText">
+                       <font size=5> Cost:  <input type="text" id="myText"></font>
                       
             </p>
+            
+             <p>
+                       <font size=5>   Performance: <select  id="idPerformance" class="myPerformance" STYLE="font-family : monospace; 
+     font-size : 12pt"></select>  </font>
+                        
+                    </p>
   
         
                 <a data-role="button" class="btn-login-fb btn-big" id="cmdLogin">Login</a>
@@ -208,7 +214,80 @@ elem.value = amount + "USD";
       
                }
     
-    
+     function getPerformance(subModelID)
+    {
+       
+    var select = $("select").addClass("model single");
+        //alert(subModelID);
+    jQuery.get("http://hearstcars.api.mashery.com/v1/api/perfdata/by-submodel-id/"+subModelID+"/json?api_key="+ g_apikey, function(data)
+    {
+        models = data.perfdata;
+        
+        
+        for (i in models)
+        {
+            var model = models[i];
+            
+                $("<option>").addClass("model")
+                             .attr("data-id", model.bg_model_id)
+                             .attr("data-name", model.bg_submodel_id)
+                             .attr("data-image", model.compression_ratio)
+                .html("Quarter_mile_time: " + model.quarter_mile_time)
+                             .appendTo(".myPerformance");
+            
+            
+                $("<option>").addClass("model")
+                             .attr("data-id", model.bg_model_id)
+                             .attr("data-name", model.bg_submodel_id)
+                             .attr("data-image", model.compression_ratio)
+                .html("Sound_level_idle: " + model.sound_level_idle)
+                             .appendTo(".myPerformance");
+            
+             $("<option>").addClass("model")
+                             .attr("data-id", model.bg_model_id)
+                             .attr("data-name", model.bg_submodel_id)
+                             .attr("data-image", model.compression_ratio)
+                .html("Final_drive_ratio: " + model.final_drive_ratio)
+                             .appendTo(".myPerformance");
+            
+            $("<option>").addClass("model")
+                             .attr("data-id", model.bg_model_id)
+                             .attr("data-name", model.bg_submodel_id)
+                             .attr("data-image", model.compression_ratio)
+                .html("Fuel_capacity: " + model.fuel_capacity)
+                             .appendTo(".myPerformance");
+            
+            
+            $("<option>").addClass("model")
+                             .attr("data-id", model.bg_model_id)
+                             .attr("data-name", model.bg_submodel_id)
+                             .attr("data-image", model.compression_ratio)
+                .html("Height: " + model.height)
+                             .appendTo(".myPerformance");
+            
+            
+            $("<option>").addClass("model")
+                             .attr("data-id", model.bg_model_id)
+                             .attr("data-name", model.bg_submodel_id)
+                             .attr("data-image", model.compression_ratio)
+                .html("Length: " + model.length)
+                             .appendTo(".myPerformance");
+            
+            $("<option>").addClass("model")
+                             .attr("data-id", model.bg_model_id)
+                             .attr("data-name", model.bg_submodel_id)
+                             .attr("data-image", model.compression_ratio)
+                .html("Width: " + model.width)
+                             .appendTo(".myPerformance");
+            
+            
+            
+            
+        break;    
+        }
+               });
+        
+               }
     
 $(document).ready(function(){
   $('#idMake').change(function() {
@@ -217,6 +296,7 @@ $(document).ready(function(){
     $("#idModel option").remove();
       //$("#idModel option").html("").appendTo(".myModel");
       $("#idSubModel option").remove();
+      $("#idPerformance option").remove();
       //document.getElementById('carImage').disabled = true;
       $("#carImage").hide();
       $("#myText").hide();
@@ -232,6 +312,7 @@ $(document).ready(function(){
       //alert($(this).val());
       //alert($(this).val('data-id'));
     $("#idSubModel option").remove();
+      $("#idPerformance option").remove();
       $("#carImage").hide();
       $("#myText").hide();
       //$("#idSubModel option").html("").appendTo(".mySubModel");
@@ -250,12 +331,13 @@ $(document).ready(function(){
     if (pic1 == typeof('undefined')) return;
     pic1.src = optionSelected;
     pic_url = optionSelected;
+         $("#idPerformance option").remove();
     item_fb = $(this).find('option:selected').attr('data-name');
     var model_id = $(this).find('option:selected').attr('data-id');
     var elem = document.getElementById("myZipCode");
     if (elem.value=="") alert("Please enter zip code.");
-    else
-    getPrice(elem.value,model_id);
+    else getPrice(elem.value,model_id);
+    getPerformance(model_id);
   });
     
   
