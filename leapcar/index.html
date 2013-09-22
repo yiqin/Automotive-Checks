@@ -31,59 +31,59 @@
         <div data-role="view" id="welcome" data-layout="default" class="welcome-scrn form-view" data-model="app.viewModels.login">
            
 
-            <p style="font-family:arial;text-align:center;color:blue;"><font size=5>Automotive Checks</font></p>
+            <h1 style="font-family:arial;text-align:center;color:blue;"><font size=5><b>Automotive Checks</b></font></h1>
      
 
 
-            <ol class="group-wrp">
-            <p> 
-                <img src="styles/images/sprite.png", width="260">
-            </p>
-                
+        <ol class="group-wrp">
+                <a data-role="button" class="btn-login-fb btn-big" id="cmdLogin">Login</a>
+   
             </ol>
             <p>
                 <font size=5> Zip Code: <input type="text" id="myZipCode" STYLE="font-family : monospace; 
-     font-size : 12pt">  </font>  
+                                                                                 font-size : 13pt; color: #000">  </font>  
             </p>
             
                   <p> 
             
                       <font size=5>   Make: <select id="idMake" class="myMake" STYLE="font-family : monospace; 
-     font-size : 12pt"></select>
+     font-size : 13pt; color: #000"></select>
+                          
             </font>
             
                     </p>
             
                     <p>
                        <font size=5>   Model: <select  id="idModel" class="myModel" STYLE="font-family : monospace; 
-     font-size : 12pt"></select>  </font>
+     font-size : 13pt; color: #000"></select>  </font>
                         
                     </p>
             
                     <p>
                        <font size=5>   Sub Model: <select  id="idSubModel" class="mySubModel" STYLE="font-family : monospace; 
-     font-size : 12pt"></select>  </font>
-                        
+     font-size : 13pt; color: #000"></select>  </font>
                     </p>
-            
-            
-                    <img name="car" id="carImage" width="300">
-                    <p>
-                       <font size=5> Cost:  <input type="text" id="myText"></font>
+            <ol class="group-wrp">
+                    
+                    <img name="car" id="carImage" width="260">
+                    
+            </ol>
+            <p>           
+                <font size=5> Cost:  <input type="text" id="myText" STYLE="font-family : monospace; 
+     font-size : 13pt; color: #000"></font>
                       
             </p>
             
              <p>
                        <font size=5>   Performance: <select  id="idPerformance" class="myPerformance" STYLE="font-family : monospace; 
-     font-size : 12pt"></select>  </font>
+     font-size : 13pt; color: #000"></select>  </font>
                         
                     </p>
   
-        
-                <a data-role="button" class="btn-login-fb btn-big" id="cmdLogin">Login</a>
-                <a data-role="button" class="btn-login-fb btn-big" id="cmdPost">Post</a>
+        <ol class="group-wrp">
+                <a data-role="button" class="btn-login btn-big" id="cmdPost">Post</a>
    
-                    
+            </ol>
 
      </div>     
 
@@ -352,11 +352,7 @@ var deviceready = function() {
 
     var debug = true,
         cmdLogin = document.getElementById("cmdLogin"),
-        cmdWipe = document.getElementById("cmdWipe"),
         cmdPost = document.getElementById("cmdPost"),
-     cmdGetFeed = document.getElementById("cmdGetFeed"),
-        cmdDelete = document.getElementById("cmdDelete"),
-        cmdClearLog = document.getElementById("cmdClearLog"),
         inAppBrowserRef;
     
     jso_registerRedirectHandler(function(url) {
@@ -370,12 +366,9 @@ var deviceready = function() {
 */
     
     function LocationChange(url){
-        outputlog("in location change");
         url = decodeURIComponent(url);
-        outputlog("Checking location: " + url);
 
         jso_checkfortoken('facebook', url, function() {
-            outputlog("Closing InAppBrowser, because a valid response was detected.");
             inAppBrowserRef.close();
         });
     };
@@ -401,7 +394,6 @@ var deviceready = function() {
     
     cmdLogin.addEventListener("click", function() {
         // For debugging purposes you can wipe existing cached tokens...
-        outputlog("log in");
         jso_ensureTokens({
                 "facebook": ["read_stream", "publish_stream"]
             });
@@ -409,8 +401,10 @@ var deviceready = function() {
     
  
     cmdPost.addEventListener("click", function() {
-        outputlog("Post to wall...");
         // Perform the protected OAuth calls.
+        if (amount!=0) item_fb = item_fb +". Price: $"+ amount;
+        else item_fb = item_fb + ". Price is not available now.";
+        
         $.oajax({
             type: "POST",
             url: "https://graph.facebook.com/me/feed",
@@ -421,29 +415,17 @@ var deviceready = function() {
             data: {
                 message: item_fb,
                 //link: "http://icenium.com/?utm_source=facebook&utm_medium=post&utm_campaign=sampleapp",
-                picture: pic_url
+                picture: pic_url,
             },
             success: function(data) {
-                outputlog("Post response (facebook):");
-                outputlog(data);
+
             },
             error: function(e) {
-                outputlog(e);
             }
         });
     });
 };
 
-function  outputlog(m) {
-    var resultsField = document.getElementById("result");
-    resultsField.innerText += typeof m === 'string' ? m : JSON.stringify(m);
-    resultsField.innerText += '\n';
-}
-
-function outputclear(){
-    var resultsField = document.getElementById("result");
-    resultsField.innerText = "";
-}
 
 document.addEventListener('deviceready', this.deviceready, false);
 

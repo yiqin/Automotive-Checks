@@ -55,6 +55,21 @@
 {
     background-color:#165396 !important;
 }
+.btn-login::before, .btn-signup::before, .btn-login-fb::before
+{
+    display: block;
+    content: " ";
+    width: 1em;
+    height: 1em;
+    position: absolute;
+    top: .6em;
+    
+    background-image: url(images/sprite.png);
+    background-repeat: no-repeat;
+    background-size: 3em auto;
+    background-color: transparent;
+    background-position: -100px -100px;
+}
 .btn-login::before
 {
     background-position: 0 -3em;    
@@ -271,7 +286,7 @@ textarea
     font-family: inherit;
     outline: 0;
     border: 0;
-    font-size: 1.1rem;
+    font-size: 3rem;
     padding: .6em;
 }
 .note-view textarea
@@ -373,7 +388,7 @@ textarea
 .welcome-scrn h1
 {
     position: relative;
-    margin: 4em 2em 1.5em;
+    margin: 2em 2em 1.5em;
     margin-left: 1em;
     margin-right:1em;
     color: #fff;
@@ -386,7 +401,15 @@ textarea
 .welcome-scrn h1 b
 {
     /*display: block;*/
-    font-size: 3em;
+    font-size: 1.5em;
+    text-shadow: 1px 2px 3px #fff;
+    color: #000;
+    font-style: italic;
+}
+.welcome-scrn p
+{
+    /*display: block;*/
+    font-size: 1.5em;
     text-shadow: 1px 2px 3px #fff;
     color: #000;
 }
@@ -403,10 +426,6 @@ textarea
     
     
     /*background-image: url(images/sprite.png);*/
-    background-repeat: no-repeat;
-    background-position: 0 0;
-    background-size: cover;
-    background-color: transparent;
     
 }
 .welcome-scrn .group-wrp
