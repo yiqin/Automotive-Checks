@@ -1,4 +1,6 @@
-RiceTableFinal
+This app has no value any more.
+
+leapcar
 ==============
 Update 01/04/2014
 No change since MHack.
